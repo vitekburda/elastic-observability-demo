@@ -216,7 +216,7 @@ services:
       - APM_SERVER_TOKEN=${APM_SERVER_TOKEN}
     restart: on-failure
     healthcheck:
-      test: curl --cacert /usr/share/apm_server/config/certificates/ca/ca.crt --max-time 120 --retry 120 --retry-delay 1 --show-error --silent https://localhost:8200
+      test: ["CMD-SHELL", "! apm-server test output -E output.elasticsearch.username=${ELASTIC_USER} -E output.elasticsearch.password=${ELASTIC_PASSWORD} | grep -q ERROR"]
 
 networks:
   elasticstack:
